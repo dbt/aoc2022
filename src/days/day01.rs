@@ -58,6 +58,24 @@ impl Day for Day01 {
 mod tests {
     use super::*;
 
+    fn test_vals() -> Vec<i32> {
+        vec![
+            1000 + 2000 + 3000,
+            4000,
+            5000 + 6000,
+            7000 + 8000 + 9000,
+            10000,
+        ]
+    }
+
     #[test]
-    fn test_x() {}
+    fn test_p1() {
+        let elves = test_vals();
+        assert_eq!(vec![24000], top_n(elves, 1));
+    }
+    #[test]
+    fn test_p2() {
+        let elves = test_vals();
+        assert_eq!(45000, top_n(elves, 3).into_iter().sum::<i32>());
+    }
 }
