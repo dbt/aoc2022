@@ -100,6 +100,9 @@ fn lookup_strat(inp: (RPS, RPS)) -> (RPS, RPS) {
 
 pub struct Day02;
 impl Day for Day02 {
+    fn day(&self) -> &'static str {
+        "Day 2"
+    }
     fn part01(&self) -> Result<()> {
         let strats = read_strategies("input02.txt")?;
         let total: i32 = strats.into_iter().map(|(lhs, rhs)| rhs.score(lhs)).sum();
