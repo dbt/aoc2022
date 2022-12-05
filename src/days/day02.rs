@@ -1,8 +1,3 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader};
-
-use anyhow::anyhow;
-
 use crate::interface::*;
 
 #[derive(Copy, Clone, Debug)]
@@ -13,15 +8,12 @@ enum RPS {
 }
 
 impl RPS {
-    fn from_char(c: char) -> Option<RPS> {
+    fn from_char(c: char) -> RPS {
         match c {
-            'A' => Some(RPS::Rock),
-            'B' => Some(RPS::Paper),
-            'C' => Some(RPS::Scissors),
-            'X' => Some(RPS::Rock),
-            'Y' => Some(RPS::Paper),
-            'Z' => Some(RPS::Scissors),
-            _ => None,
+            'A' => RPS::Rock,
+            'B' => RPS::Paper,
+            'C' => RPS::Scissors,
+            _ => unreachable!("invalid RPS: '{}'", c),
         }
     }
     fn value(&self) -> i32 {
@@ -45,11 +37,12 @@ enum Strat {
 }
 
 impl Strat {
-    fn from_rps(rps: RPS) -> Strat {
-        match rps {
-            RPS::Rock => Self::Lose,
-            RPS::Paper => Self::Draw,
-            RPS::Scissors => Self::Win,
+    fn from_char(c: char) -> Strat {
+        match c {
+            'X' => Self::Lose,
+            'Y' => Self::Draw,
+            'Z' => Self::Win,
+            _ => unreachable!("invalid strat: '{}'", c),
         }
     }
     fn pick_move(&self, opponent: RPS) -> RPS {
@@ -66,36 +59,37 @@ impl Strat {
     }
 }
 
-fn read_strategies(fname: &str) -> Result<Vec<(RPS, RPS)>> {
-    let f = File::open(fname)?;
-    let lines = BufReader::new(f).lines();
+fn read_strategies(fname: &str) -> Result<Vec<(RPS, Strat)>> {
+    let lines = read_lines(fname)?;
     lines
         .into_iter()
-        .map(|x| -> Result<(RPS, RPS)> {
-            let s = x?;
-            let handy = |ochar: Option<char>| -> Result<RPS> {
-                let rps = match ochar {
-                    Some(c) => RPS::from_char(c),
-                    None => None,
-                };
-                match rps {
-                    Some(m) => Ok(m),
-                    None => Err(anyhow!("Invalid input: {}", s)),
-                }
-            };
-            let first = handy(s.chars().next())?;
-            let second = handy(s.chars().nth(2))?;
+        .map(|s| -> Result<(RPS, Strat)> {
+            let first = s.chars().next().map(|c| RPS::from_char(c)).unwrap();
+            let second = s.chars().nth(2).map(|c| Strat::from_char(c)).unwrap();
 
             Ok((first, second))
         })
         .collect()
 }
 
-fn lookup_strat(inp: (RPS, RPS)) -> (RPS, RPS) {
-    let (opp, strat_hack) = inp;
-    let strat = Strat::from_rps(strat_hack);
+fn map_strat((other, strat): (RPS, Strat)) -> (RPS, RPS) {
+    (
+        other,
+        match strat {
+            Strat::Lose => RPS::Rock,
+            Strat::Draw => RPS::Paper,
+            Strat::Win => RPS::Scissors,
+        },
+    )
+}
+
+fn execute_strat((opp, strat): (RPS, Strat)) -> (RPS, RPS) {
     let my_move = strat.pick_move(opp);
     (opp, my_move)
+}
+
+fn score((opp, me): (RPS, RPS)) -> i32 {
+    me.score(opp)
 }
 
 pub struct Day02;
@@ -105,18 +99,14 @@ impl Day for Day02 {
     }
     fn part01(&self) -> Result<()> {
         let strats = read_strategies("input02.txt")?;
-        let total: i32 = strats.into_iter().map(|(lhs, rhs)| rhs.score(lhs)).sum();
+        let total: i32 = strats.into_iter().map(map_strat).map(score).sum();
         println!("{}", total);
         Ok(())
     }
 
     fn part02(&self) -> Result<()> {
         let strats = read_strategies("input02.txt")?;
-        let total: i32 = strats
-            .into_iter()
-            .map(lookup_strat)
-            .map(|(opp, me)| me.score(opp))
-            .sum();
+        let total: i32 = strats.into_iter().map(execute_strat).map(score).sum();
         println!("{}", total);
         Ok(())
     }
@@ -129,18 +119,14 @@ mod tests {
     #[test]
     fn test_p1() {
         let strats = read_strategies("test02.txt").unwrap();
-        let total: i32 = strats.into_iter().map(|(lhs, rhs)| rhs.score(lhs)).sum();
+        let total: i32 = strats.into_iter().map(map_strat).map(score).sum();
         assert_eq!(total, 15)
     }
 
     #[test]
     fn test_p2() {
         let strats = read_strategies("test02.txt").unwrap();
-        let total: i32 = strats
-            .into_iter()
-            .map(lookup_strat)
-            .map(|(lhs, rhs)| rhs.score(lhs))
-            .sum();
+        let total: i32 = strats.into_iter().map(execute_strat).map(score).sum();
         assert_eq!(total, 12)
     }
 }
