@@ -1,23 +1,16 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader};
-
 use crate::interface::*;
 
 pub struct Day01;
 
-fn elves(fname: &str) -> Result<Vec<i32>> {
-    let f = File::open(fname)?;
-    let lines = BufReader::new(f).lines();
+fn elves() -> Result<Vec<i32>> {
     let mut res = vec![];
     let mut rolling = 0;
-    for l in lines {
-        let s = l?;
-        let tr = s.trim();
-        if tr.is_empty() {
+    for s in read_lines("input01.txt")? {
+        if s.is_empty() {
             res.push(rolling);
             rolling = 0;
         } else {
-            let i: i32 = tr.parse()?;
+            let i: i32 = s.parse()?;
             rolling += i;
         }
     }
@@ -41,13 +34,13 @@ impl Day for Day01 {
         1
     }
     fn part01(&self) -> Result<()> {
-        let vals = elves("input01.txt")?;
+        let vals = elves()?;
         let top = top_n(vals, 1);
         println!("{}", top[0]);
         Ok(())
     }
     fn part02(&self) -> Result<()> {
-        let vals = elves("input01.txt")?;
+        let vals = elves()?;
         let top = top_n(vals, 3);
         println!("{}", top[0] + top[1] + top[2]);
         Ok(())
