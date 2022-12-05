@@ -56,8 +56,8 @@ fn partial_overlap(pair: &AssigmentPair) -> bool {
 }
 
 impl Day for Day04 {
-    fn day(&self) -> &'static str {
-        "Day 4"
+    fn number(&self) -> u8 {
+        4
     }
     fn part01(&self) -> Result<()> {
         let overlapping = read_lines("input04.txt")?

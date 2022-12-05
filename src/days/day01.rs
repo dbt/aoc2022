@@ -37,8 +37,8 @@ pub fn top_n(elves: Vec<i32>, count: usize) -> Vec<i32> {
 }
 
 impl Day for Day01 {
-    fn day(&self) -> &'static str {
-        "Day 1"
+    fn number(&self) -> u8 {
+        1
     }
     fn part01(&self) -> Result<()> {
         let vals = elves("input01.txt")?;

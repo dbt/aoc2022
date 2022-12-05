@@ -4,7 +4,7 @@ use std::fs::File;
 use std::io::{self, BufRead, BufReader};
 
 pub trait Day {
-    fn day(&self) -> &'static str;
+    fn number(&self) -> u8;
     fn part01(&self) -> Result<()>;
     fn part02(&self) -> Result<()>;
 }

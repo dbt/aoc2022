@@ -61,8 +61,8 @@ impl Containers {
 }
 
 impl Day for Day05 {
-    fn day(&self) -> &'static str {
-        "Day 5"
+    fn number(&self) -> u8 {
+        5
     }
     fn part01(&self) -> Result<()> {
         let lines = read_lines("input05.txt")?;

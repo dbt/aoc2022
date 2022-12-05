@@ -38,8 +38,8 @@ fn priority(item: u8) -> u8 {
 }
 
 impl Day for Day03 {
-    fn day(&self) -> &'static str {
-        "Day 3"
+    fn number(&self) -> u8 {
+        3
     }
     fn part01(&self) -> Result<()> {
         let sacks = read_lines("input03.txt")?;
