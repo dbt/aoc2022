@@ -3,5 +3,5 @@ use adventools::runner;
 use anyhow::Result;
 
 fn main() -> Result<()> {
-    runner::run(all_days())
+    runner::run(2022, all_days())
 }
