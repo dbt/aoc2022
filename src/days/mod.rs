@@ -3,6 +3,7 @@ pub mod day02;
 pub mod day03;
 pub mod day04;
 pub mod day05;
+pub mod day06;
 
 use crate::interface::Day;
 
@@ -13,5 +14,6 @@ pub fn all_days() -> Vec<Box<dyn Day>> {
         Box::new(day03::Day03 {}),
         Box::new(day04::Day04 {}),
         Box::new(day05::Day05 {}),
+        Box::new(day06::D {}),
     ]
 }
