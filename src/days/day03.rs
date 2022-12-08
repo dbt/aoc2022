@@ -98,5 +98,15 @@ mod tests {
         assert_eq!(157, total);
     }
     #[test]
-    fn test_p2() {}
+    fn test_p2() {
+        let sacks = test_vals();
+        let sum: i32 = sacks
+            .chunks(3)
+            .into_iter()
+            .map(|x| find_common_item(x.to_vec()))
+            .map(priority)
+            .map(i32::from)
+            .sum();
+        assert_eq!(70, sum);
+    }
 }
