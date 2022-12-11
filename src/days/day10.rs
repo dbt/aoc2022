@@ -92,7 +92,7 @@ impl Day for D {
     fn part02(&self) -> Result<()> {
         let prog = read_lines("input10.txt")?;
         let mut m = Machine::new(prog);
-        println!("\n{}", m.draw(40, 6).join("\n"));
+        println!("\n{}", m.draw(40, 6).join("\n").replace("#", "█").replace(".", " "));
         Ok(())
     }
 }
