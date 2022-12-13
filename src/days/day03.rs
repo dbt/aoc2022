@@ -42,7 +42,7 @@ impl Day for Day03 {
         3
     }
     fn part01(&self) -> Result<()> {
-        let sacks = read_lines("input03.txt")?;
+        let sacks = self.input()?;
         let total: i32 = sacks
             .into_iter()
             .map(|s| find_halves(s.as_str()))
@@ -53,7 +53,7 @@ impl Day for Day03 {
         Ok(())
     }
     fn part02(&self) -> Result<()> {
-        let sacks = read_lines("input03.txt")?;
+        let sacks = self.input()?;
         let groups = sacks.chunks(3);
         let sum: i32 = groups
             .into_iter()

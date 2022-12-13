@@ -151,7 +151,7 @@ impl Day for D {
         11
     }
     fn part01(&self) -> Result<()> {
-        let mut barrel = Barrel::new(&read_lines("input11.txt")?, 3)?;
+        let mut barrel = Barrel::new(&self.input()?, 3)?;
         for _ in 0..20 {
             barrel.process();
         }
@@ -160,7 +160,7 @@ impl Day for D {
     }
 
     fn part02(&self) -> Result<()> {
-        let mut barrel = Barrel::new(&read_lines("input11.txt")?, 3)?;
+        let mut barrel = Barrel::new(&self.input()?, 3)?;
         for _ in 0..10000 {
             barrel.process();
         }

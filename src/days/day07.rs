@@ -98,14 +98,14 @@ impl Day for D {
     }
 
     fn part01(&self) -> Result<()> {
-        let v = read_lines("input07.txt")?;
+        let v = self.input()?;
         let dir = Dirs::new(&v)?;
         println!("{}", dir.small_size());
 
         Ok(())
     }
     fn part02(&self) -> Result<()> {
-        let v = read_lines("input07.txt")?;
+        let v = self.input()?;
         let dir = Dirs::new(&v)?;
         println!("{}", dir.find_min_delete(30000000));
 

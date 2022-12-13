@@ -7,12 +7,12 @@ impl Day for D {
         12
     }
     fn part01(&self) -> Result<()> {
-        println!("{}", path(&read_lines("input12.txt")?, "S"));
+        println!("{}", path(&self.input()?, "S"));
         Ok(())
     }
 
     fn part02(&self) -> Result<()> {
-        println!("{}", path(&read_lines("input12.txt")?, "Sa"));
+        println!("{}", path(&self.input()?, "Sa"));
         Ok(())
     }
 }

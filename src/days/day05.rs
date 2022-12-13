@@ -65,13 +65,13 @@ impl Day for Day05 {
         5
     }
     fn part01(&self) -> Result<()> {
-        let lines = read_lines("input05.txt")?;
+        let lines = self.input()?;
         let container = Containers::read(lines.iter().map(|s| s.as_str()).collect(), false);
         println!("{}", container.tops());
         Ok(())
     }
     fn part02(&self) -> Result<()> {
-        let lines = read_lines("input05.txt")?;
+        let lines = self.input()?;
         let container = Containers::read(lines.iter().map(|s| s.as_str()).collect(), true);
         println!("{}", container.tops());
         Ok(())

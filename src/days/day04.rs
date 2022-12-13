@@ -60,7 +60,7 @@ impl Day for Day04 {
         4
     }
     fn part01(&self) -> Result<()> {
-        let overlapping = read_lines("input04.txt")?
+        let overlapping = self.input()?
             .into_iter()
             .map(|s| s.parse::<AssigmentPair>().unwrap())
             .filter(full_overlap)
@@ -69,7 +69,7 @@ impl Day for Day04 {
         Ok(())
     }
     fn part02(&self) -> Result<()> {
-        let overlapping = read_lines("input04.txt")?
+        let overlapping = self.input()?
             .into_iter()
             .map(|s| s.parse::<AssigmentPair>().unwrap())
             .filter(partial_overlap)

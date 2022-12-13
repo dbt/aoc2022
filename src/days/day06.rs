@@ -9,14 +9,14 @@ impl Day for D {
     }
 
     fn part01(&self) -> Result<()> {
-        let lines = read_lines("input06.txt")?;
+        let lines = self.input()?;
         let s = lines.get(0).unwrap();
         println!("{}", find_signal(&s[..], 4).unwrap());
         Ok(())
     }
 
     fn part02(&self) -> Result<()> {
-        let lines = read_lines("input06.txt")?;
+        let lines = self.input()?;
         let s = lines.get(0).unwrap();
         println!("{}", find_signal(&s[..], 14).unwrap());
         Ok(())

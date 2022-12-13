@@ -59,12 +59,12 @@ impl Day for D {
         9
     }
     fn part01(&self) -> Result<()> {
-        let moves = read_lines("input09.txt")?;
+        let moves = self.input()?;
         println!("{}", watch_tail(2, moves));
         Ok(())
     }
     fn part02(&self) -> Result<()> {
-        let moves = read_lines("input09.txt")?;
+        let moves = self.input()?;
         println!("{}", watch_tail(10, moves));
         Ok(())
     }

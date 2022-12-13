@@ -121,11 +121,12 @@ impl Day for D {
         13
     }
     fn part01(&self) -> Result<()> {
-        println!("{}", ordered_indices(&read_lines("input13.txt")?));
+
+        println!("{}", ordered_indices(&self.input()?));
         Ok(())
     }
     fn part02(&self) -> Result<()> {
-        println!("{}", decoder_key(&read_lines("input13.txt")?));
+        println!("{}", decoder_key(&self.input()?));
         Ok(())
     }
 }

@@ -87,13 +87,13 @@ impl Day for D {
         8
     }
     fn part01(&self) -> Result<()> {
-        let input = read_lines("input08.txt")?;
+        let input = self.input()?;
         let grove = Grove::new(&input);
         println!("{}", grove.count_visible());
         Ok(())
     }
     fn part02(&self) -> Result<()> {
-        let input = read_lines("input08.txt")?;
+        let input = self.input()?;
         let grove = Grove::new(&input);
         println!("{}", grove.best_scenic_score());
         Ok(())

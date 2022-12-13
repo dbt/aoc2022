@@ -84,13 +84,13 @@ impl Day for D {
         10
     }
     fn part01(&self) -> Result<()> {
-        let prog = read_lines("input10.txt")?;
+        let prog = self.input()?;
         let mut m = Machine::new(prog);
         println!("{}", m.signal_readings(&vec![20, 60, 100, 140, 180, 220]));
         Ok(())
     }
     fn part02(&self) -> Result<()> {
-        let prog = read_lines("input10.txt")?;
+        let prog = self.input()?;
         let mut m = Machine::new(prog);
         println!(
             "\n{}",

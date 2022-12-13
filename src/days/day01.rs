@@ -2,10 +2,10 @@ use crate::interface::*;
 
 pub struct Day01;
 
-fn elves() -> Result<Vec<i32>> {
+fn elves(v: &Vec<String>) -> Result<Vec<i32>> {
     let mut res = vec![];
     let mut rolling = 0;
-    for s in read_lines("input01.txt")? {
+    for s in v {
         if s.is_empty() {
             res.push(rolling);
             rolling = 0;
@@ -34,13 +34,13 @@ impl Day for Day01 {
         1
     }
     fn part01(&self) -> Result<()> {
-        let vals = elves()?;
+        let vals = elves(&self.input()?)?;
         let top = top_n(vals, 1);
         println!("{}", top[0]);
         Ok(())
     }
     fn part02(&self) -> Result<()> {
-        let vals = elves()?;
+        let vals = elves(&self.input()?)?;
         let top = top_n(vals, 3);
         println!("{}", top[0] + top[1] + top[2]);
         Ok(())
@@ -70,5 +70,10 @@ mod tests {
     fn test_p2() {
         let elves = test_vals();
         assert_eq!(45000, top_n(elves, 3).into_iter().sum::<i32>());
+    }
+
+    #[test]
+    fn test_string() {
+        assert_eq!("input01.txt", format!("input{:02}.txt", 1));
     }
 }
