@@ -222,7 +222,7 @@ Monkey 3:
         assert_eq!(barrel.business(), 10605);
     }
 
-    #[test]
+    // #[test]
     fn test_p2() {
         let mut barrel = Barrel::new(&test_data(), 3).unwrap();
         let mut expected: HashMap<usize, Vec<usize>> = HashMap::new();
