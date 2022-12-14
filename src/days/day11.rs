@@ -4,14 +4,15 @@ use lazy_static::lazy_static;
 use num::integer::lcm;
 use regex::{Captures, Regex};
 
+type ValueType = u128;
 enum Operation {
-    Multiply(usize),
-    Add(usize),
+    Multiply(ValueType),
+    Add(ValueType),
     Square,
 }
 
 impl Operation {
-    fn apply(&self, val: usize) -> usize {
+    fn apply(&self, val: ValueType) -> ValueType {
         match self {
             Operation::Add(add) => *add + val,
             Operation::Multiply(factor) => *factor * val,
@@ -22,12 +23,12 @@ impl Operation {
 
 struct Monkey {
     id: usize,
-    items: Vec<usize>,
+    items: Vec<ValueType>,
     operation: Operation,
-    test_divisor: usize,
+    test_divisor: ValueType,
     dest_true: usize,
     dest_false: usize,
-    extra_divisor: usize,
+    extra_divisor: ValueType,
     counter: usize,
 }
 
@@ -37,7 +38,7 @@ fn parse<'a>(re: &Regex, input: &'a str) -> Result<Captures<'a>> {
 }
 
 impl Monkey {
-    fn new(input: &[String], extra_divisor: usize) -> Result<Monkey> {
+    fn new(input: &[String], extra_divisor: ValueType) -> Result<Monkey> {
         lazy_static! {
             static ref LINE_1: Regex = Regex::new(r"Monkey (\d+):").unwrap();
             static ref LINE_2: Regex = Regex::new(r"Starting items: (\d+(, \d+)*)$").unwrap();
@@ -52,7 +53,7 @@ impl Monkey {
         let capture2 = parse(&LINE_2, &input[1])?;
         let starting: Vec<_> = capture2[1]
             .split(", ")
-            .map(|s| s.parse::<usize>())
+            .map(|s| s.parse::<ValueType>())
             .collect::<Result<_, _>>()?;
         let cap3 = parse(&LINE_3, &input[2])?;
         let op = if &cap3[1] == "+" {
@@ -64,7 +65,7 @@ impl Monkey {
         } else {
             Err(anyhow!("Invalid input: '{}'", &input[2]))?
         };
-        let test_divisor: usize = parse(&LINE_4, &input[3])?[1].parse()?;
+        let test_divisor: ValueType = parse(&LINE_4, &input[3])?[1].parse()?;
         let dest_true = parse(&LINE_5, &input[4])?[1].parse()?;
         let dest_false = parse(&LINE_6, &input[5])?[1].parse()?;
 
@@ -80,7 +81,7 @@ impl Monkey {
         })
     }
 
-    fn look(&mut self) -> (Vec<usize>, Vec<usize>) {
+    fn look(&mut self) -> (Vec<ValueType>, Vec<ValueType>) {
         let outputs: Vec<_> = self
             .items
             .iter()
@@ -104,11 +105,11 @@ impl Monkey {
 
 struct Barrel {
     monkeys: Vec<Monkey>,
-    lcm: usize,
+    lcm: ValueType,
 }
 
 impl Barrel {
-    fn new(v: &Vec<String>, extra_divisor: usize) -> Result<Barrel> {
+    fn new(v: &Vec<String>, extra_divisor: ValueType) -> Result<Barrel> {
         let r = v
             .chunks(7)
             .map(|c| Monkey::new(c, extra_divisor))
@@ -214,6 +215,7 @@ Monkey 3:
         assert_eq!(barrel.monkeys[0].items.len(), 4);
         assert_eq!(barrel.monkeys[1].items.len(), 6);
         assert_eq!(barrel.monkeys[0].items, vec![20, 23, 27, 26]);
+        // assert_eq!(barrel.monkeys.iter().map(|m| m.counter).collect::<Vec<_>>(), vec![2,4,3,6]);
         for _ in 0..19 {
             barrel.process()
         }
@@ -222,11 +224,12 @@ Monkey 3:
         assert_eq!(barrel.business(), 10605);
     }
 
-    // #[test]
+    #[test]
+    #[ignore = "broken"]
     fn test_p2() {
         let mut barrel = Barrel::new(&test_data(), 3).unwrap();
         let mut expected: HashMap<usize, Vec<usize>> = HashMap::new();
-        // expected.insert(1, vec![2,4,3,6]);
+        expected.insert(1, vec![2,4,3,6]);
         expected.insert(20, vec![99, 97, 8, 103]);
         for idx in 1..=10000 {
             barrel.process();
