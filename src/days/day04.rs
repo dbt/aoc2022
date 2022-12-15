@@ -55,23 +55,21 @@ fn partial_overlap(pair: &AssigmentPair) -> bool {
     !(e1 < b2 || e2 < b1)
 }
 
+impl DayParsed for Day04 {}
+
 impl Day for Day04 {
     fn number(&self) -> u8 {
         4
     }
     fn part01(&self) -> Result<()> {
-        let overlapping = self.input()?
-            .into_iter()
-            .map(|s| s.parse::<AssigmentPair>().unwrap())
+        let overlapping = self.input_as::<AssigmentPair>()?.into_iter()
             .filter(full_overlap)
             .count();
         println!("{}", overlapping);
         Ok(())
     }
     fn part02(&self) -> Result<()> {
-        let overlapping = self.input()?
-            .into_iter()
-            .map(|s| s.parse::<AssigmentPair>().unwrap())
+        let overlapping = self.input_as::<AssigmentPair>()?.into_iter()
             .filter(partial_overlap)
             .count();
         println!("{}", overlapping);

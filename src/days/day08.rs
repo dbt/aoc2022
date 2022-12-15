@@ -87,14 +87,12 @@ impl Day for D {
         8
     }
     fn part01(&self) -> Result<()> {
-        let input = self.input()?;
-        let grove = Grove::new(&input);
+        let grove = Grove::new(&self.input()?);
         println!("{}", grove.count_visible());
         Ok(())
     }
     fn part02(&self) -> Result<()> {
-        let input = self.input()?;
-        let grove = Grove::new(&input);
+        let grove = Grove::new(&self.input()?);
         println!("{}", grove.best_scenic_score());
         Ok(())
     }

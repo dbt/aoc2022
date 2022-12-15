@@ -7,17 +7,19 @@ use regex::Regex;
 
 pub struct D {}
 
+impl DayParsed for D {}
+
 impl Day for D {
     fn number(&self) -> u8 {
         15
     }
     fn part01(&self) -> Result<()> {
-        let sensors = parse_lines::<SensorBeaconPair>(&self.input()?)?;
+        let sensors = self.input_as::<SensorBeaconPair>()?;
         println!("{}", total_occluded(2000000, &sensors));
         Ok(())
     }
     fn part02(&self) -> Result<()> {
-        let sensors = parse_lines::<SensorBeaconPair>(&self.input()?)?;
+        let sensors = self.input_as::<SensorBeaconPair>()?;
         let signal = find_missing_beacon(4000000, 4000000, &sensors).unwrap();
         println!("{}", signal);
         Ok(())
