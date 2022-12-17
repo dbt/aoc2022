@@ -67,7 +67,7 @@ impl ValveSet {
 
     fn best_path_with_help(&self) -> usize {
         let useful_valves: Vec<_> = self.valves.iter().filter_map(|v| if v.flow_rate > 0 { Some(v.id.to_string())} else { None }).collect();
-        (1..(useful_valves.len()))
+        (1..((useful_valves.len()/2)))
             .flat_map(|k| useful_valves.iter().combinations(k))
             .map(|mine| {
                 // println!("{}", mine.len());
